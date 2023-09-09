@@ -1,0 +1,82 @@
+1)
+select date, sum(impressions) as total_impressions
+from marketing_data
+group by date
+order by total_impressions desc;
+
+2)
+select state, sum(revenue) as total_revenue
+from website_revenue
+group by state
+order by total_revenue desc;
+
+3)
+SELECT
+    ci.name AS campaign_name,
+    SUM(md.cost) AS total_cost,
+    SUM(md.impressions) AS total_impressions,
+    SUM(md.clicks) AS total_clicks,
+    SUM(wr.revenue) AS total_revenue
+FROM
+    campaign_info ci
+LEFT JOIN
+    marketing_data md
+ON
+    ci.id = md.campaign_id
+LEFT JOIN
+    website_revenue wr
+ON
+    ci.id = wr.campaign_id
+GROUP BY
+    ci.name
+ORDER BY
+    ci.name;
+
+4)
+SELECT
+    wr.state,
+    SUM(md.conversions) AS total_conversions
+FROM
+    marketing_data md
+INNER JOIN
+    website_revenue wr
+ON
+    md.campaign_id = wr.campaign_id
+INNER JOIN
+    campaign_info ci
+ON
+    md.campaign_id = ci.id
+WHERE
+    ci.name = 'Campaign5'
+GROUP BY
+    wr.state;
+
+5)
+SELECT
+    c.name AS campaign_name,
+    SUM(wr.revenue) AS total_revenue,
+    SUM(mp.cost) AS total_cost,
+    (SUM(wr.revenue) - SUM(mp.cost)) / SUM(mp.cost) AS roi
+FROM
+    campaign_info c
+JOIN
+    marketing_data mp ON c.id = mp.campaign_id
+JOIN
+    website_revenue wr ON c.id = wr.campaign_id
+GROUP BY
+    c.name
+ORDER BY
+    roi DESC;
+
+6)
+SELECT
+    DAYNAME(date) AS day_of_week,
+    AVG(impressions) AS avg_impressions,
+    AVG(clicks) AS avg_clicks,
+    AVG(conversions) AS avg_conversions
+FROM
+    marketing_data
+GROUP BY
+    day_of_week
+ORDER BY
+    avg_conversions DESC;
