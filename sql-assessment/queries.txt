@@ -1,14 +1,15 @@
 1)
-select date, sum(impressions) as total_impressions
-from marketing_data
-group by date
-order by total_impressions desc;
+SELECT date, SUM(impressions) AS total_impressions
+FROM marketing_data
+GROUP BY date
+ORDER BY date;
 
 2)
-select state, sum(revenue) as total_revenue
-from website_revenue
-group by state
-order by total_revenue desc;
+SELECT state, SUM(revenue) AS total_revenue
+FROM website_revenue
+GROUP BY state
+ORDER BY total_revenue DESC
+LIMIT 3;
 
 3)
 SELECT
